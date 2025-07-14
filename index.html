@@ -4,213 +4,225 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CleanTube - Distraction-Free YouTube Player</title>
-    <meta name="description" content="CleanTube provides a distraction-free YouTube viewing experience without comments, suggestions, or ads. Clean interface for focused video consumption.">
-    
-    <!-- Open Graph tags -->
-    <meta property="og:title" content="CleanTube - Distraction-Free YouTube Player">
-    <meta property="og:description" content="Watch YouTube videos without distractions - no comments, suggestions, or ads.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://cleantube.replit.app">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📺</text></svg>">
-    
-    <!-- Styles -->
+    <meta name="description" content="CleanTube provides a distraction-free YouTube viewing experience by removing comments, suggestions, and ads from videos.">
     <style>
+        :root {
+            --golden: #DAA520;
+            --golden-light: #FFD700;
+            --text-dark: #000;
+            --text-light: #666;
+            --text-lighter: #999;
+            --border-light: #e0e0e0;
+            --bg-light: #f5f5f5;
+            --bg-white: #fff;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
-        :root {
-            --golden: hsl(43, 100%, 50%);
-            --golden-dark: hsl(43, 100%, 45%);
-            --golden-light: hsl(43, 100%, 55%);
-            --bg-light: hsl(0, 0%, 98%);
-            --bg-dark: hsl(0, 0%, 8%);
-            --text-light: hsl(0, 0%, 15%);
-            --text-dark: hsl(0, 0%, 85%);
-            --border-light: hsl(0, 0%, 90%);
-            --border-dark: hsl(0, 0%, 20%);
-        }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-light);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
             line-height: 1.6;
-            overflow-x: hidden;
+            color: var(--text-dark);
+            background: var(--bg-light);
+            min-height: 100vh;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
-        
+
         /* Header */
         .header {
+            background: var(--bg-white);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-light);
         }
-        
+
         .logo {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
             color: var(--golden);
         }
-        
-        .auth-buttons {
+
+        .user-info {
             display: flex;
-            gap: 10px;
+            align-items: center;
+            gap: 15px;
         }
-        
-        /* iOS-style buttons */
-        .ios-button {
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--golden);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-white);
+            font-weight: bold;
+        }
+
+        .btn {
             padding: 12px 24px;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             font-size: 16px;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: hsl(0, 0%, 95%);
-            color: var(--text-light);
         }
-        
-        .ios-button:hover {
-            background: hsl(0, 0%, 90%);
-            transform: translateY(-1px);
-        }
-        
-        .ios-button.primary {
+
+        .btn-primary {
             background: var(--golden);
-            color: black;
+            color: var(--bg-white);
         }
-        
-        .ios-button.primary:hover {
-            background: var(--golden-dark);
+
+        .btn-primary:hover {
+            background: var(--golden-light);
+            transform: translateY(-2px);
         }
-        
-        .ios-button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
+
+        .btn-secondary {
+            background: var(--bg-light);
+            color: var(--text-dark);
         }
-        
-        /* Landing page */
-        .landing {
+
+        .btn-secondary:hover {
+            background: var(--border-light);
+        }
+
+        /* Login Screen */
+        .login-screen {
             text-align: center;
-            padding: 60px 20px;
-        }
-        
-        .landing h1 {
-            font-size: 48px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--golden), var(--golden-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .landing p {
-            font-size: 18px;
-            margin-bottom: 40px;
-            color: hsl(0, 0%, 50%);
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        /* Home page */
-        .home {
-            display: none;
-        }
-        
-        .home.active {
-            display: block;
-        }
-        
-        /* URL Input */
-        .url-input-section {
-            background: white;
+            background: var(--bg-white);
+            padding: 60px 40px;
             border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
+            max-width: 500px;
+            margin: 100px auto;
         }
-        
-        .url-input-form {
+
+        .login-screen h1 {
+            font-size: 48px;
+            color: var(--golden);
+            margin-bottom: 20px;
+        }
+
+        .login-screen p {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 40px;
+        }
+
+        .login-form {
             display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
+            flex-direction: column;
+            gap: 20px;
         }
-        
-        .url-input {
-            flex: 1;
-            padding: 15px 20px;
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .input-group label {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
             border: 2px solid var(--border-light);
-            border-radius: 12px;
+            border-radius: 10px;
             font-size: 16px;
-            outline: none;
-            transition: border-color 0.2s;
+            transition: border-color 0.3s ease;
         }
-        
-        .url-input:focus {
+
+        .input-group input:focus {
+            outline: none;
             border-color: var(--golden);
         }
-        
-        .url-input.error {
-            border-color: hsl(0, 70%, 50%);
+
+        /* URL Input */
+        .url-input {
+            background: var(--bg-white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
         }
-        
-        .error-message {
-            color: hsl(0, 70%, 50%);
-            font-size: 14px;
-            margin-top: 5px;
+
+        .url-input h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
         }
-        
-        /* Video player */
-        .video-player {
-            display: none;
-            background: white;
+
+        .url-form {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .url-form input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .url-form input:focus {
+            outline: none;
+            border-color: var(--golden);
+        }
+
+        /* Video Player */
+        .video-section {
+            background: var(--bg-white);
             border-radius: 20px;
             padding: 30px;
+            box-shadow: var(--shadow);
             margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
-        
-        .video-player.active {
-            display: block;
-        }
-        
+
         .video-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
-        
+
         .video-info h2 {
             font-size: 20px;
             margin-bottom: 5px;
         }
-        
+
         .video-info p {
-            color: hsl(0, 0%, 50%);
+            color: var(--text-light);
             font-size: 14px;
         }
-        
+
         .video-container {
             position: relative;
             width: 100%;
@@ -220,7 +232,7 @@
             border-radius: 12px;
             overflow: hidden;
         }
-        
+
         .video-iframe {
             position: absolute;
             top: 0;
@@ -229,32 +241,32 @@
             height: 100%;
             border: none;
         }
-        
+
         .video-controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 10px;
         }
-        
+
         .controls-left {
             display: flex;
             gap: 10px;
         }
-        
+
         .controls-right {
             display: flex;
             gap: 10px;
         }
-        
-        /* Recent videos */
+
+        /* Recent Videos */
         .recent-videos {
-            background: white;
+            background: var(--bg-white);
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
         }
-        
+
         .recent-videos h3 {
             font-size: 20px;
             margin-bottom: 20px;
@@ -262,13 +274,13 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .recent-videos-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
         }
-        
+
         .video-card {
             border: 1px solid var(--border-light);
             border-radius: 12px;
@@ -276,12 +288,12 @@
             cursor: pointer;
             transition: all 0.2s ease;
         }
-        
+
         .video-card:hover {
             border-color: var(--golden);
             transform: translateY(-2px);
         }
-        
+
         .video-card img {
             width: 100%;
             height: 120px;
@@ -289,7 +301,7 @@
             border-radius: 8px;
             margin-bottom: 10px;
         }
-        
+
         .video-card h4 {
             font-size: 14px;
             margin-bottom: 5px;
@@ -298,24 +310,24 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        
+
         .video-card p {
             font-size: 12px;
-            color: hsl(0, 0%, 50%);
+            color: var(--text-light);
             margin-bottom: 5px;
         }
-        
+
         .video-card .time {
             font-size: 11px;
-            color: hsl(0, 0%, 40%);
+            color: var(--text-lighter);
         }
-        
+
         /* Screenshot feature */
         .screenshot-button {
             position: relative;
             overflow: hidden;
         }
-        
+
         .screenshot-button::before {
             content: '';
             position: absolute;
@@ -323,236 +335,173 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: left 0.5s;
         }
-        
+
         .screenshot-button:hover::before {
             left: 100%;
         }
-        
-        /* Tooltip */
-        .tooltip {
-            position: relative;
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .url-form {
+                flex-direction: column;
+            }
+
+            .video-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .recent-videos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading states */
+        .loading {
             display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-light);
+            border-radius: 50%;
+            border-top-color: var(--golden);
+            animation: spin 1s ease-in-out infinite;
         }
-        
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 200px;
-            background-color: black;
-            color: white;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 10px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -100px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 12px;
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
-        
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
+
+        /* Hidden class */
+        .hidden {
+            display: none !important;
         }
-        
+
         /* Auto-resume notification */
         .auto-resume-notification {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: white;
-            border: 2px solid var(--golden);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            background: var(--bg-white);
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-hover);
+            border-left: 4px solid var(--golden);
             z-index: 1000;
-            max-width: 300px;
-            animation: slideInFromRight 0.3s ease-out;
+            max-width: 350px;
         }
-        
-        .notification-content p {
-            margin: 0 0 5px 0;
-            font-size: 14px;
-        }
-        
-        .notification-content p:first-child {
-            font-weight: bold;
+
+        .auto-resume-notification h4 {
+            margin-bottom: 5px;
             color: var(--golden);
         }
-        
-        .notification-content p:last-of-type {
-            color: hsl(0, 0%, 40%);
-            font-size: 12px;
-            max-width: 250px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+
+        .auto-resume-notification p {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 10px;
         }
-        
-        @keyframes slideInFromRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-            
-            .landing h1 {
-                font-size: 36px;
-            }
-            
-            .url-input-form {
-                flex-direction: column;
-            }
-            
-            .video-controls {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .controls-left,
-            .controls-right {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .recent-videos-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .auto-resume-notification {
-                top: 10px;
-                left: 10px;
-                right: 10px;
-                max-width: none;
-                animation: slideInFromTop 0.3s ease-out;
-            }
-            
-            @keyframes slideInFromTop {
-                from {
-                    transform: translateY(-100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateY(0);
-                    opacity: 1;
-                }
-            }
-        }
-        
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.3s ease-out;
-        }
-        
-        /* Hidden utility */
-        .hidden {
-            display: none !important;
+
+        .auto-resume-notification .btn {
+            padding: 8px 16px;
+            font-size: 14px;
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo">CleanTube</div>
-            <div class="auth-buttons">
-                <button id="loginBtn" class="ios-button primary">Sign In</button>
-                <button id="logoutBtn" class="ios-button hidden">Sign Out</button>
-                <span id="userInfo" class="hidden"></span>
-            </div>
-        </header>
-
-        <!-- Landing Page -->
-        <div id="landingPage" class="landing">
+        <!-- Login Screen -->
+        <div id="loginScreen" class="login-screen">
             <h1>CleanTube</h1>
-            <p>Watch YouTube videos without distractions. No comments, no suggestions, no ads - just pure video content in a clean, focused interface.</p>
-            <button id="getStartedBtn" class="ios-button primary">Get Started</button>
+            <p>Experience YouTube without distractions</p>
+            <form id="loginForm" class="login-form">
+                <div class="input-group">
+                    <label for="username">Enter your username:</label>
+                    <input type="text" id="username" name="username" required 
+                           placeholder="Enter your username" autocomplete="username">
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Continue to CleanTube
+                </button>
+            </form>
         </div>
 
-        <!-- Home Page -->
-        <div id="homePage" class="home">
-            <!-- URL Input Section -->
-            <div class="url-input-section fade-in">
-                <h2 style="margin-bottom: 20px;">Enter YouTube URL</h2>
-                <form id="urlForm" class="url-input-form">
-                    <input 
-                        type="url" 
-                        id="urlInput" 
-                        class="url-input" 
-                        placeholder="Paste YouTube URL here..." 
-                        required
-                    >
-                    <button type="submit" class="ios-button primary">Load Video</button>
+        <!-- Main App -->
+        <div id="mainApp" class="hidden">
+            <!-- Header -->
+            <div class="header">
+                <div class="logo">CleanTube</div>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar"></div>
+                    <span id="userName"></span>
+                    <button class="btn btn-secondary" onclick="app.logout()">
+                        Logout
+                    </button>
+                </div>
+            </div>
+
+            <!-- URL Input -->
+            <div id="urlInputSection" class="url-input">
+                <h2>Enter YouTube Video URL</h2>
+                <form id="urlForm" class="url-form">
+                    <input type="url" id="videoUrl" placeholder="https://www.youtube.com/watch?v=..." required>
+                    <button type="submit" class="btn btn-primary">
+                        Load Video
+                    </button>
                 </form>
-                <div id="errorMessage" class="error-message hidden"></div>
             </div>
 
             <!-- Video Player -->
-            <div id="videoPlayer" class="video-player">
+            <div id="videoSection" class="video-section hidden">
                 <div class="video-header">
                     <div class="video-info">
-                        <h2 id="videoTitle">Video Title</h2>
-                        <p id="videoChannel">Channel Name</p>
+                        <h2 id="videoTitle">Loading...</h2>
+                        <p id="videoChannel">Loading...</p>
                     </div>
-                    <button id="backBtn" class="ios-button">← Back</button>
+                    <button class="btn btn-secondary" onclick="app.showHome()">
+                        ← Back to Home
+                    </button>
                 </div>
                 
                 <div class="video-container">
-                    <iframe 
-                        id="videoIframe" 
-                        class="video-iframe"
-                        src="" 
-                        allowfullscreen
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    ></iframe>
+                    <iframe id="videoIframe" class="video-iframe" allowfullscreen></iframe>
                 </div>
                 
                 <div class="video-controls">
                     <div class="controls-left">
-                        <button id="fullscreenBtn" class="ios-button">🔍 Full Screen</button>
-                        <div class="tooltip">
-                            <button id="screenshotBtn" class="ios-button primary screenshot-button">📸 Screenshot</button>
-                            <span class="tooltiptext">Take a screenshot (Ctrl/Cmd + Shift + S)</span>
-                        </div>
+                        <button class="btn btn-secondary" onclick="app.toggleFullscreen()">
+                            🔳 Fullscreen
+                        </button>
                     </div>
                     <div class="controls-right">
-                        <button class="ios-button">🔊</button>
-                        <button class="ios-button">⚙️</button>
+                        <button id="screenshotBtn" class="btn btn-primary screenshot-button" onclick="app.takeScreenshot()">
+                            📸 Screenshot
+                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- Recent Videos -->
-            <div id="recentVideos" class="recent-videos">
+            <div id="recentVideosSection" class="recent-videos">
                 <h3>
                     Recent Videos
-                    <button id="clearHistoryBtn" class="ios-button" style="padding: 8px 16px; font-size: 14px;">Clear History</button>
+                    <button class="btn btn-secondary" onclick="app.clearHistory()">
+                        🗑️ Clear History
+                    </button>
                 </h3>
                 <div id="recentVideosGrid" class="recent-videos-grid">
                     <!-- Recent videos will be populated here -->
@@ -561,254 +510,230 @@
         </div>
     </div>
 
+    <!-- Auto-resume notification -->
+    <div id="autoResumeNotification" class="auto-resume-notification hidden">
+        <h4>Resume Last Video?</h4>
+        <p id="autoResumeText"></p>
+        <button class="btn btn-primary" onclick="app.resumeVideo()">Resume</button>
+        <button class="btn btn-secondary" onclick="app.dismissAutoResume()">Dismiss</button>
+    </div>
+
     <script>
-        // CleanTube - Pure JavaScript Application
         class CleanTube {
             constructor() {
                 this.currentVideo = null;
-                this.isLoggedIn = false;
-                this.userInfo = null;
                 this.recentVideos = [];
-                
+                this.isLoggedIn = false;
+                this.username = '';
+                this.autoResumeVideo = null;
                 this.init();
             }
-            
+
             init() {
-                // Load user data from localStorage
                 this.loadUserData();
-                
-                // Set up event listeners
                 this.setupEventListeners();
-                
-                // Initialize UI
-                this.updateUI();
-                
-                // Load recent videos
-                this.loadRecentVideos();
-                
-                // Handle URL parameters or auto-resume last video
                 this.handleUrlParameters();
             }
-            
+
             setupEventListeners() {
-                // Authentication buttons
-                document.getElementById('loginBtn').addEventListener('click', () => this.showLogin());
-                document.getElementById('logoutBtn').addEventListener('click', () => this.logout());
-                document.getElementById('getStartedBtn').addEventListener('click', () => this.showLogin());
-                
-                // URL form
-                document.getElementById('urlForm').addEventListener('submit', (e) => this.handleUrlSubmit(e));
-                
-                // Video controls
-                document.getElementById('backBtn').addEventListener('click', () => this.showHome());
-                document.getElementById('fullscreenBtn').addEventListener('click', () => this.toggleFullscreen());
-                document.getElementById('screenshotBtn').addEventListener('click', () => this.takeScreenshot());
-                document.getElementById('clearHistoryBtn').addEventListener('click', () => this.clearHistory());
-                
+                document.getElementById('loginForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const username = document.getElementById('username').value.trim();
+                    if (username) {
+                        this.login(username);
+                    }
+                });
+
+                document.getElementById('urlForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleUrlSubmit(e);
+                });
+
                 // Keyboard shortcuts
                 document.addEventListener('keydown', (e) => this.handleKeydown(e));
             }
-            
-            // Authentication methods
+
             showLogin() {
-                const username = prompt('Enter your username:');
-                if (username) {
-                    this.login(username);
-                }
+                document.getElementById('loginScreen').classList.remove('hidden');
+                document.getElementById('mainApp').classList.add('hidden');
             }
-            
+
             login(username) {
+                this.username = username;
                 this.isLoggedIn = true;
-                this.userInfo = {
-                    username: username,
-                    loginTime: new Date().toISOString()
-                };
-                
-                // Save to localStorage
-                localStorage.setItem('cleanTubeUser', JSON.stringify(this.userInfo));
-                localStorage.setItem('cleanTubeLoggedIn', 'true');
-                
+                localStorage.setItem('cleanTubeUser', username);
                 this.updateUI();
                 this.loadRecentVideos();
-                
-                // Check for pending video from URL parameter
-                const pendingVideo = localStorage.getItem('cleanTubePendingVideo');
-                if (pendingVideo) {
-                    localStorage.removeItem('cleanTubePendingVideo');
-                    const youtubeUrl = `https://www.youtube.com/watch?v=${pendingVideo}`;
-                    this.loadVideo(pendingVideo, youtubeUrl);
-                } else {
-                    // Auto-resume last video if no pending video
-                    this.autoResumeLastVideo();
-                }
+                this.handleUrlParameters();
             }
-            
+
             logout() {
                 this.isLoggedIn = false;
-                this.userInfo = null;
-                
-                // Clear localStorage
+                this.username = '';
+                this.currentVideo = null;
+                this.recentVideos = [];
                 localStorage.removeItem('cleanTubeUser');
-                localStorage.removeItem('cleanTubeLoggedIn');
-                
-                this.updateUI();
+                localStorage.removeItem('cleanTubeRecentVideos');
+                this.showLogin();
             }
-            
+
             loadUserData() {
                 const savedUser = localStorage.getItem('cleanTubeUser');
-                const loggedIn = localStorage.getItem('cleanTubeLoggedIn');
-                
-                if (loggedIn === 'true' && savedUser) {
+                if (savedUser) {
+                    this.username = savedUser;
                     this.isLoggedIn = true;
-                    this.userInfo = JSON.parse(savedUser);
-                }
-            }
-            
-            // UI methods
-            updateUI() {
-                const landingPage = document.getElementById('landingPage');
-                const homePage = document.getElementById('homePage');
-                const loginBtn = document.getElementById('loginBtn');
-                const logoutBtn = document.getElementById('logoutBtn');
-                const userInfo = document.getElementById('userInfo');
-                
-                if (this.isLoggedIn) {
-                    landingPage.style.display = 'none';
-                    homePage.classList.add('active');
-                    loginBtn.classList.add('hidden');
-                    logoutBtn.classList.remove('hidden');
-                    userInfo.classList.remove('hidden');
-                    userInfo.textContent = `Welcome, ${this.userInfo.username}`;
+                    this.updateUI();
+                    this.loadRecentVideos();
                 } else {
-                    landingPage.style.display = 'block';
-                    homePage.classList.remove('active');
-                    loginBtn.classList.remove('hidden');
-                    logoutBtn.classList.add('hidden');
-                    userInfo.classList.add('hidden');
+                    this.showLogin();
                 }
             }
-            
-            showHome() {
-                document.getElementById('videoPlayer').classList.remove('active');
-                document.getElementById('urlInput').value = '';
-                this.currentVideo = null;
+
+            updateUI() {
+                if (this.isLoggedIn) {
+                    document.getElementById('loginScreen').classList.add('hidden');
+                    document.getElementById('mainApp').classList.remove('hidden');
+                    document.getElementById('userName').textContent = this.username;
+                    document.getElementById('userAvatar').textContent = this.username.charAt(0).toUpperCase();
+                } else {
+                    this.showLogin();
+                }
             }
-            
-            // YouTube URL handling
+
+            showHome() {
+                document.getElementById('urlInputSection').classList.remove('hidden');
+                document.getElementById('videoSection').classList.add('hidden');
+                document.getElementById('recentVideosSection').classList.remove('hidden');
+                this.currentVideo = null;
+                // Clear URL parameters
+                history.pushState({}, '', window.location.pathname);
+            }
+
             handleUrlSubmit(e) {
                 e.preventDefault();
-                const url = document.getElementById('urlInput').value;
-                const errorMessage = document.getElementById('errorMessage');
+                const url = document.getElementById('videoUrl').value.trim();
                 
                 if (!this.isValidYouTubeUrl(url)) {
-                    errorMessage.textContent = 'Please enter a valid YouTube URL';
-                    errorMessage.classList.remove('hidden');
-                    document.getElementById('urlInput').classList.add('error');
+                    alert('Please enter a valid YouTube URL');
                     return;
                 }
-                
-                errorMessage.classList.add('hidden');
-                document.getElementById('urlInput').classList.remove('error');
-                
+
                 const videoId = this.extractVideoId(url);
                 if (videoId) {
                     this.loadVideo(videoId, url);
                 }
             }
-            
+
             isValidYouTubeUrl(url) {
-                const patterns = [
-                    /^https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/,
-                    /^https?:\/\/(?:www\.)?youtu\.be\/([a-zA-Z0-9_-]+)/,
-                    /^https?:\/\/(?:www\.)?youtube\.com\/embed\/([a-zA-Z0-9_-]+)/
-                ];
-                
-                return patterns.some(pattern => pattern.test(url));
+                const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/;
+                return youtubeRegex.test(url);
             }
-            
+
             extractVideoId(url) {
-                const patterns = [
-                    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]+)/
-                ];
-                
-                for (const pattern of patterns) {
-                    const match = url.match(pattern);
-                    if (match) {
-                        return match[1];
-                    }
-                }
-                return null;
+                const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/;
+                const match = url.match(regex);
+                return match ? match[1] : null;
             }
-            
-            // Video loading and playback
+
             async loadVideo(videoId, originalUrl) {
                 try {
+                    // Hide home sections and show video section
+                    document.getElementById('urlInputSection').classList.add('hidden');
+                    document.getElementById('recentVideosSection').classList.add('hidden');
+                    document.getElementById('videoSection').classList.remove('hidden');
+
+                    // Load video info
                     const videoInfo = await this.fetchVideoInfo(videoId);
                     
+                    // Set video information
+                    document.getElementById('videoTitle').textContent = videoInfo.title || 'YouTube Video';
+                    document.getElementById('videoChannel').textContent = videoInfo.channel || 'Unknown Channel';
+                    
+                    // Set iframe source
+                    const iframe = document.getElementById('videoIframe');
+                    iframe.src = this.createEmbedUrl(videoId);
+                    
+                    // Store current video
                     this.currentVideo = {
-                        id: videoId,
-                        url: originalUrl,
+                        videoId: videoId,
                         title: videoInfo.title,
                         channel: videoInfo.channel,
                         thumbnailUrl: videoInfo.thumbnailUrl,
-                        loadedAt: new Date().toISOString()
+                        url: originalUrl,
+                        watchedAt: new Date()
                     };
-                    
-                    // Update video player
-                    document.getElementById('videoTitle').textContent = videoInfo.title;
-                    document.getElementById('videoChannel').textContent = videoInfo.channel;
-                    document.getElementById('videoIframe').src = this.createEmbedUrl(videoId);
-                    
-                    // Show video player
-                    document.getElementById('videoPlayer').classList.add('active');
-                    
+
                     // Add to recent videos
                     this.addToRecentVideos(this.currentVideo);
+
+                    // Update URL with video ID
+                    history.pushState({}, '', `?v=${videoId}`);
+                    
+                    // Clear the input
+                    document.getElementById('videoUrl').value = '';
                     
                 } catch (error) {
                     console.error('Error loading video:', error);
-                    document.getElementById('errorMessage').textContent = 'Failed to load video. Please try again.';
-                    document.getElementById('errorMessage').classList.remove('hidden');
+                    alert('Error loading video. Please try again.');
                 }
             }
-            
+
             async fetchVideoInfo(videoId) {
-                // Since we can't make direct API calls without a key, we'll use the thumbnail URL
-                // and create a basic info structure
-                return {
-                    title: 'YouTube Video',
-                    channel: 'YouTube Channel',
-                    thumbnailUrl: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
-                };
+                try {
+                    // Since we can't access YouTube API directly, we'll use thumbnail and basic info
+                    const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+                    
+                    return {
+                        id: videoId,
+                        title: 'YouTube Video',
+                        channel: 'YouTube',
+                        thumbnailUrl: thumbnailUrl
+                    };
+                } catch (error) {
+                    console.error('Error fetching video info:', error);
+                    return {
+                        id: videoId,
+                        title: 'YouTube Video',
+                        channel: 'Unknown Channel',
+                        thumbnailUrl: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+                    };
+                }
             }
-            
+
             createEmbedUrl(videoId) {
-                return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&controls=1&showinfo=0&fs=1&cc_load_policy=0&iv_load_policy=3&autohide=1`;
+                const params = new URLSearchParams({
+                    autoplay: '1',
+                    modestbranding: '1',
+                    rel: '0',
+                    showinfo: '0',
+                    iv_load_policy: '3',
+                    cc_load_policy: '0',
+                    fs: '1',
+                    controls: '1'
+                });
+                
+                return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
             }
-            
-            // Recent videos management
+
             addToRecentVideos(video) {
                 if (!this.isLoggedIn) return;
                 
                 // Remove if already exists
-                this.recentVideos = this.recentVideos.filter(v => v.id !== video.id);
+                this.recentVideos = this.recentVideos.filter(v => v.videoId !== video.videoId);
                 
                 // Add to beginning
                 this.recentVideos.unshift(video);
                 
-                // Keep only last 20 videos
-                this.recentVideos = this.recentVideos.slice(0, 20);
+                // Keep only last 10 videos
+                this.recentVideos = this.recentVideos.slice(0, 10);
                 
                 // Save to localStorage
                 localStorage.setItem('cleanTubeRecentVideos', JSON.stringify(this.recentVideos));
                 
-                // Also save as last video for auto-resume
-                localStorage.setItem('cleanTubeLastVideo', JSON.stringify(video));
-                
                 // Update UI
                 this.renderRecentVideos();
             }
-            
+
             loadRecentVideos() {
                 if (!this.isLoggedIn) return;
                 
@@ -819,7 +744,7 @@
                 
                 this.renderRecentVideos();
             }
-            
+
             renderRecentVideos() {
                 const grid = document.getElementById('recentVideosGrid');
                 
@@ -829,15 +754,48 @@
                 }
                 
                 grid.innerHTML = this.recentVideos.map(video => `
-                    <div class="video-card" onclick="app.loadVideo('${video.id}', '${video.url}')">
-                        <img src="${video.thumbnailUrl}" alt="${video.title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDI4MCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjI4MCIgaGVpZ2h0PSIxMjAiIGZpbGw9IiNmNWY1ZjUiLz48cGF0aCBkPSJNMTIwIDYwTDE2MCA0MFYzNEgxMjBWNDBMMTAwIDYwTDEyMCA4MFY4NkgxNjBWODBMMTQwIDYwSDE2MFY4MEwxMjAgNjBaIiBmaWxsPSIjY2NjY2NjIi8+PC9zdmc+'">
+                    <div class="video-card" onclick="app.loadVideo('${video.videoId}', '${video.url}')">
+                        <img src="${video.thumbnailUrl}" alt="${video.title}" onerror="this.style.display='none'">
                         <h4>${video.title}</h4>
                         <p>${video.channel}</p>
-                        <div class="time">${this.timeAgo(video.loadedAt)}</div>
+                        <p class="time">${this.formatWatchedDate(new Date(video.watchedAt))}</p>
                     </div>
                 `).join('');
             }
-            
+
+            formatWatchedDate(date) {
+                const now = new Date();
+                const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const watchedDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                
+                // If watched today, show time
+                if (watchedDate.getTime() === today.getTime()) {
+                    return `Today at ${date.toLocaleTimeString('en-US', { 
+                        hour: 'numeric', 
+                        minute: '2-digit', 
+                        hour12: true 
+                    })}`;
+                }
+                
+                // If watched yesterday
+                const yesterday = new Date(today);
+                yesterday.setDate(today.getDate() - 1);
+                if (watchedDate.getTime() === yesterday.getTime()) {
+                    return `Yesterday at ${date.toLocaleTimeString('en-US', { 
+                        hour: 'numeric', 
+                        minute: '2-digit', 
+                        hour12: true 
+                    })}`;
+                }
+                
+                // For older dates, show the full date
+                return date.toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: now.getFullYear() !== date.getFullYear() ? 'numeric' : undefined
+                });
+            }
+
             clearHistory() {
                 if (confirm('Are you sure you want to clear your video history?')) {
                     this.recentVideos = [];
@@ -845,87 +803,7 @@
                     this.renderRecentVideos();
                 }
             }
-            
-            timeAgo(dateString) {
-                const date = new Date(dateString);
-                const now = new Date();
-                const seconds = Math.floor((now - date) / 1000);
-                
-                if (seconds < 60) return 'Just now';
-                if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
-                if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
-                return `${Math.floor(seconds / 86400)}d ago`;
-            }
-            
-            // Handle URL parameters or auto-resume last video
-            handleUrlParameters() {
-                const urlParams = new URLSearchParams(window.location.search);
-                const videoId = urlParams.get('v');
-                
-                // If there's a video ID in URL, load it directly
-                if (videoId) {
-                    if (this.isLoggedIn) {
-                        const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
-                        this.loadVideo(videoId, youtubeUrl);
-                    } else {
-                        // Store video ID for after login
-                        localStorage.setItem('cleanTubePendingVideo', videoId);
-                    }
-                    return;
-                }
-                
-                // Otherwise, auto-resume last video if user is logged in
-                this.autoResumeLastVideo();
-            }
-            
-            // Auto-resume last video
-            autoResumeLastVideo() {
-                // Only auto-resume if user is logged in
-                if (!this.isLoggedIn) return;
-                
-                // Get last video from localStorage
-                const lastVideoData = localStorage.getItem('cleanTubeLastVideo');
-                if (!lastVideoData) return;
-                
-                try {
-                    const lastVideo = JSON.parse(lastVideoData);
-                    
-                    // Show a brief notification and auto-load after a short delay
-                    this.showAutoResumeNotification(lastVideo);
-                    
-                    // Auto-load the video after 2 seconds
-                    setTimeout(() => {
-                        this.loadVideo(lastVideo.id, lastVideo.url);
-                    }, 2000);
-                    
-                } catch (error) {
-                    console.error('Error parsing last video data:', error);
-                }
-            }
-            
-            // Show notification for auto-resume
-            showAutoResumeNotification(video) {
-                const notification = document.createElement('div');
-                notification.className = 'auto-resume-notification';
-                notification.innerHTML = `
-                    <div class="notification-content">
-                        <p><strong>Resuming your last video...</strong></p>
-                        <p>${video.title}</p>
-                        <button onclick="this.parentElement.parentElement.remove()" class="ios-button" style="margin-top: 10px; padding: 8px 16px; font-size: 14px;">Cancel</button>
-                    </div>
-                `;
-                
-                document.body.appendChild(notification);
-                
-                // Auto-remove after 3 seconds
-                setTimeout(() => {
-                    if (notification.parentElement) {
-                        notification.remove();
-                    }
-                }, 3000);
-            }
-            
-            // Video controls
+
             toggleFullscreen() {
                 const iframe = document.getElementById('videoIframe');
                 if (iframe.requestFullscreen) {
@@ -936,7 +814,7 @@
                     iframe.msRequestFullscreen();
                 }
             }
-            
+
             async takeScreenshot() {
                 if (!this.currentVideo) return;
                 
@@ -967,54 +845,61 @@
                             // Draw thumbnail
                             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                             
-                            // Add overlay
-                            const overlayHeight = 120;
-                            const gradient = ctx.createLinearGradient(0, canvas.height - overlayHeight, 0, canvas.height);
-                            gradient.addColorStop(0, 'rgba(0, 0, 0, 0.3)');
-                            gradient.addColorStop(1, 'rgba(0, 0, 0, 0.8)');
-                            ctx.fillStyle = gradient;
-                            ctx.fillRect(0, canvas.height - overlayHeight, canvas.width, overlayHeight);
-                            
-                            // Add CleanTube branding
-                            ctx.fillStyle = '#FFD700';
-                            ctx.font = 'bold 32px Arial';
-                            ctx.fillText('CleanTube', 30, canvas.height - 70);
+                            // Add CleanTube watermark and info overlay
+                            ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                            ctx.fillRect(0, canvas.height - 100, canvas.width, 100);
                             
                             // Add video title
-                            ctx.fillStyle = '#FFFFFF';
-                            ctx.font = '24px Arial';
-                            const maxWidth = canvas.width - 200;
-                            const title = this.currentVideo.title;
-                            if (ctx.measureText(title).width > maxWidth) {
-                                const truncated = title.substring(0, 50) + '...';
-                                ctx.fillText(truncated, 30, canvas.height - 40);
-                            } else {
-                                ctx.fillText(title, 30, canvas.height - 40);
+                            ctx.fillStyle = 'white';
+                            ctx.font = 'bold 28px -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif';
+                            ctx.textAlign = 'left';
+                            const title = this.currentVideo.title || 'YouTube Video';
+                            const maxTitleWidth = canvas.width - 40;
+                            let displayTitle = title;
+                            if (ctx.measureText(title).width > maxTitleWidth) {
+                                displayTitle = title.substring(0, 60) + '...';
                             }
+                            ctx.fillText(displayTitle, 20, canvas.height - 65);
                             
-                            // Add timestamp
-                            ctx.fillStyle = '#CCCCCC';
-                            ctx.font = '16px Arial';
-                            const timestamp = new Date().toLocaleString();
-                            ctx.fillText(timestamp, canvas.width - 200, canvas.height - 20);
+                            // Add channel name
+                            ctx.fillStyle = '#ccc';
+                            ctx.font = '18px -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif';
+                            ctx.fillText(this.currentVideo.channel || 'Unknown Channel', 20, canvas.height - 40);
+                            
+                            // Add CleanTube logo/text
+                            ctx.fillStyle = '#DAA520'; // Golden color
+                            ctx.font = 'bold 20px -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif';
+                            ctx.textAlign = 'right';
+                            ctx.fillText('CleanTube', canvas.width - 20, canvas.height - 15);
+                            
+                            // Add timestamp with note
+                            const now = new Date();
+                            ctx.fillStyle = '#888';
+                            ctx.font = '14px -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif';
+                            ctx.fillText(`Captured on ${now.toLocaleString()}`, canvas.width - 20, canvas.height - 40);
+                            
+                            // Add note about thumbnail capture
+                            ctx.fillStyle = '#999';
+                            ctx.font = '12px -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif';
+                            ctx.fillText('Note: This is a video thumbnail with overlay info', canvas.width - 20, canvas.height - 65);
                             
                             resolve();
                         };
                         
                         img.onerror = () => {
                             // Create fallback image
-                            ctx.fillStyle = '#FFD700';
+                            ctx.fillStyle = '#DAA520';
                             ctx.fillRect(0, 0, canvas.width, canvas.height);
                             
                             ctx.fillStyle = '#000';
-                            ctx.font = 'bold 48px Arial';
+                            ctx.font = 'bold 48px -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif';
                             ctx.textAlign = 'center';
                             ctx.fillText('CleanTube', canvas.width / 2, canvas.height / 2 - 50);
                             
-                            ctx.font = '24px Arial';
+                            ctx.font = '24px -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif';
                             ctx.fillText(this.currentVideo.title, canvas.width / 2, canvas.height / 2 + 20);
                             
-                            ctx.font = '16px Arial';
+                            ctx.font = '16px -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif';
                             ctx.fillText(new Date().toLocaleString(), canvas.width / 2, canvas.height / 2 + 60);
                             
                             resolve();
@@ -1043,7 +928,69 @@
                     button.disabled = false;
                 }
             }
-            
+
+            // Handle URL parameters or auto-resume last video
+            handleUrlParameters() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const videoId = urlParams.get('v');
+                
+                // If there's a video ID in URL, load it directly
+                if (videoId) {
+                    if (this.isLoggedIn) {
+                        const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
+                        this.loadVideo(videoId, youtubeUrl);
+                    } else {
+                        // Store video ID for after login
+                        localStorage.setItem('cleanTubePendingVideo', videoId);
+                    }
+                    return;
+                }
+                
+                // Otherwise, auto-resume last video if user is logged in
+                this.autoResumeLastVideo();
+            }
+
+            // Auto-resume last video
+            autoResumeLastVideo() {
+                if (!this.isLoggedIn || this.recentVideos.length === 0) return;
+                
+                const lastVideo = this.recentVideos[0];
+                const now = new Date();
+                const lastWatched = new Date(lastVideo.watchedAt);
+                const hoursSinceWatched = (now - lastWatched) / (1000 * 60 * 60);
+                
+                // Only show auto-resume if last video was watched within 24 hours
+                if (hoursSinceWatched < 24) {
+                    this.autoResumeVideo = lastVideo;
+                    this.showAutoResumeNotification(lastVideo);
+                }
+            }
+
+            showAutoResumeNotification(video) {
+                const notification = document.getElementById('autoResumeNotification');
+                const text = document.getElementById('autoResumeText');
+                
+                text.textContent = `Continue watching "${video.title}" from ${this.formatWatchedDate(new Date(video.watchedAt))}?`;
+                notification.classList.remove('hidden');
+                
+                // Auto-hide after 10 seconds
+                setTimeout(() => {
+                    this.dismissAutoResume();
+                }, 10000);
+            }
+
+            resumeVideo() {
+                if (this.autoResumeVideo) {
+                    this.loadVideo(this.autoResumeVideo.videoId, this.autoResumeVideo.url);
+                }
+                this.dismissAutoResume();
+            }
+
+            dismissAutoResume() {
+                document.getElementById('autoResumeNotification').classList.add('hidden');
+                this.autoResumeVideo = null;
+            }
+
             // Keyboard shortcuts
             handleKeydown(e) {
                 // Screenshot shortcut: Ctrl/Cmd + Shift + S
